@@ -39,7 +39,7 @@ cleanup(Vt, Nodes) ->
                   KpNodes ->
                       vtree_modify:write_new_root(Vt, KpNodes)
               end,
-    ?LOG_DEBUG("Cleanup took: ~ps~n",
+    couch_log:debug("Cleanup took: ~ps~n",
                [erlang:convert_time_unit(erlang:monotonic_time() - T1, native, microsecond)/1000000]),
     Vt#vtree{root=NewRoot}.
 

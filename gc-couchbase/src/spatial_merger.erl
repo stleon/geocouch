@@ -248,7 +248,7 @@ spatial_view_folder(ViewSpec, MergeParams, DDoc, Queue) ->
                     couch_index_merger:ddoc_not_found_msg(DDocDbName, DDocId)});
         _Tag:Error ->
             Stack = erlang:get_stacktrace(),
-            ?LOG_ERROR("Caught unexpected error "
+            couch_log:error("Caught unexpected error "
                        "while serving view query ~s/~s: ~p~n~s",
                        [?LOG_USERDATA(SetName), ?LOG_USERDATA(DDocId), Error, ?LOG_USERDATA(Stack)]),
             couch_view_merger_queue:queue(Queue,
@@ -495,7 +495,7 @@ simple_set_view_query(Params, DDoc, Req) ->
         ok;
     _ ->
         couch_set_view:release_group(Group),
-        ?LOG_INFO("Set view `~s`, group `~s`, missing partitions: ~w",
+        couch_log:info("Set view `~s`, group `~s`, missing partitions: ~w",
                   [?LOG_USERDATA(SetName), ?LOG_USERDATA(DDocId), MissingPartitions]),
         throw({error, set_view_outdated})
     end,

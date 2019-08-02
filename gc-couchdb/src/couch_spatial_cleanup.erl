@@ -40,7 +40,7 @@ run(Db) ->
     ToDelete = DiskFiles -- SigFiles,
 
     lists:foreach(fun(FN) ->
-        ?LOG_DEBUG("Deleting stale spatial view file: ~s", [FN]),
+        couch_log:debug("Deleting stale spatial view file: ~s", [FN]),
         couch_file:delete(RootDir, FN, false)
     end, ToDelete),
 

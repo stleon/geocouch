@@ -1,0 +1,2 @@
+export ERL_COMPILER_OPTIONS='[{i,"/Users/stleon/projects/couchdb/src/couch/include"}]'
+export COUCH_SRC=/Users/stleon/projects/couchdb/src/couch/

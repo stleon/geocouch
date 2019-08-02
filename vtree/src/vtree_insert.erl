@@ -48,9 +48,9 @@ insert(#vtree{root=nil}=Vt, Nodes) ->
             %     replaces with something better
             ArbitraryBulkSize = round(math:log(Threshold)+50),
             Vt3 = insert_in_bulks(Vt2, Rest, ArbitraryBulkSize),
-            ?LOG_DEBUG("Insertion into empty tree took: ~ps~n",
+            couch_log:debug("Insertion into empty tree took: ~ps~n",
                       [erlang:convert_time_unit(erlang:monotonic_time() - T1, native, microsecond)/1000000]),
-            ?LOG_DEBUG("Root pos: ~p~n", [(Vt3#vtree.root)#kp_node.childpointer]),
+            couch_log:debug("Root pos: ~p~n", [(Vt3#vtree.root)#kp_node.childpointer]),
             Vt3;
         false ->
             [Root] = vtree_modify:write_nodes(Vt, Nodes, MbbO),
@@ -62,7 +62,7 @@ insert(Vt, Nodes) ->
     PartitionedNodes = [Nodes],
     KpNodes = insert_multiple(Vt, PartitionedNodes, [Root]),
     NewRoot = vtree_modify:write_new_root(Vt, KpNodes),
-    ?LOG_DEBUG("Insertion into existing tree took: ~ps~n",
+    couch_log:debug("Insertion into existing tree took: ~ps~n",
                [erlang:convert_time_unit(erlang:monotonic_time() - T1, native, microsecond)/1000000]),
     Vt#vtree{root=NewRoot}.
 
